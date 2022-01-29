@@ -78,7 +78,6 @@ private:
   bool isLeftJustified(void) const { return (((flags&force_left_justify)!=0)||(!spaceid->isBigEndian())); }
 public:
   ParamEntry(int4 grp) { group=grp; }			///< Constructor for use with restoreXml
-  ParamEntry(type_metatype t,int4 grp,int4 grpsize,const Address &loc,int4 sz,int4 mnsz,int4 align,bool normalstack);
   int4 getGroup(void) const { return group; }		///< Get the group id \b this belongs to
   int4 getGroupSize(void) const { return groupsize; }	///< Get the number of groups occupied by \b this
   int4 getSize(void) const { return size; }		///< Get the size of the memory range in bytes.
@@ -287,12 +286,13 @@ public:
 /// value of the pointer
 class FspecSpace : public AddrSpace {
 public:
-  FspecSpace(AddrSpaceManager *m,const Translate *t,const string &nm,int4 ind);	///< Constructor
+  FspecSpace(AddrSpaceManager *m,const Translate *t,int4 ind);	///< Constructor
   virtual void saveXmlAttributes(ostream &s,uintb offset) const;
   virtual void saveXmlAttributes(ostream &s,uintb offset,int4 size) const;
   virtual void printRaw(ostream &s,uintb offset) const;
   virtual void saveXml(ostream &s) const;
   virtual void restoreXml(const Element *el);
+  static const string NAME;		///< Reserved name for the fspec space
 };
 
 /// \brief Basic elements of a parameter: address, data-type, properties
